@@ -1,0 +1,3 @@
+FROM hypriot/rpi-python
+MAINTAINER peter@pouliot.net
+RUN apt-get update -y && apt-get install git make g++ openssl-devel -y

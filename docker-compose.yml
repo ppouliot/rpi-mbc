@@ -1,0 +1,33 @@
+version: "3"
+services:
+  mgmt-ui:
+    image: portainer/portainer:arm
+    restart: always
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    expose:
+      - 9000
+    ports:
+      - 80:9000
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+  openvpn-data:
+    container_name: openvpn-data
+    volumes:
+     - /etc/openvpn
+  openvpn:
+    cap_add:
+     - NET_ADMIN
+  # Image to use for Intel based systems
+  # image: kylemanna/openvpn
+    image: container4armhf/armhf-docker-openvpn
+    container_name: openvpn
+    ports:
+     - "1194:1194/udp"
+    restart: always
+    volumes:
+     - ./openvpn-data/conf:/etc/openvpn
+  #gogs-git-server:
+    

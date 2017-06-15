@@ -1,0 +1,10 @@
+FROM resin/rpi-raspbian:stretch-20170531
+MAINTAINER peter@pouliot.net
+## BEGIN ENVIRONMENT HERE ##
+ENV  PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/opt/puppetlabs/bin:/usr/local/go/bin
+## BEGIN COPY HERE        ##
+## BEGIN RUN HERE         ##
+RUN apt-get update -y && apt-get install wget -y
+RUN wget -c https://storage.googleapis.com/golang/go1.8.3.linux-armv6l.tar.gz
+RUN mkdir -p /usr/local
+RUN tar -C /usr/local -xzf go1.8.3.linux-armv6l.tar.gz

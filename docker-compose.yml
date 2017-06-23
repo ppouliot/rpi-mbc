@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   mgmt-ui:
     image: portainer/portainer:arm
@@ -13,21 +13,30 @@ services:
       placement:
         constraints:
           - node.role == manager
-  openvpn-data:
-    container_name: openvpn-data
-    volumes:
-     - /etc/openvpn
-  openvpn:
-    cap_add:
-     - NET_ADMIN
+#  openvpn-data:
+#    container_name: openvpn-data
+#    volumes:
+#     - /etc/openvpn
+#  openvpn:
+#    cap_add:
+#     - NET_ADMIN
   # Image to use for Intel based systems
   # image: kylemanna/openvpn
-    image: container4armhf/armhf-docker-openvpn
-    container_name: openvpn
-    ports:
-     - "1194:1194/udp"
+#    image: container4armhf/armhf-docker-openvpn
+##    container_name: openvpn
+#    ports:
+#     - "1194:1194/udp"
+#    restart: always
+#    volumes:
+#     - ./openvpn-data/conf:/etc/openvpn
+  gogs:
+    image: gogs/gogs-rpi
     restart: always
     volumes:
-     - ./openvpn-data/conf:/etc/openvpn
-  #gogs-git-server:
-    
+      - '/home/pirate/gogs-data/:/data'
+    expose:
+      - 22
+      - 3000
+    ports:
+      - 8022:22
+      - 3000:3000

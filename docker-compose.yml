@@ -1,6 +1,6 @@
 version: '3'
 services:
-  mgmt-ui:
+  portainer:
     image: portainer/portainer:arm
     restart: always
     volumes:

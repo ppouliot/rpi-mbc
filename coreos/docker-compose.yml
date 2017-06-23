@@ -1,8 +1,8 @@
-version: '2'
+version: '3'
 
 services:
 
-  mgmt-ui:
+  portainer:
     image: portainer/portainer
     restart: always
     volumes:
@@ -83,12 +83,24 @@ services:
       - gogs-mysql-db
     environment:
       - "RUN_CROND=true"
-    networks:
-      - gogs
+#    networks:
+#      - gogs
     volumes:
       - "gogs-data:/data"
     depends_on:
       - gogs-mysql-db
+
+  jenkins-master:
+    image: jenkins:latest
+    restart: always
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    environment:
+      - "JENKINS_OPTS --executors 8"
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
 
 #networks:
 #    gogs:
@@ -100,4 +112,6 @@ volumes:
     mysql-data:
       driver: local
     gogs-data:
+      driver: local
+    jenkins-data:
       driver: local
